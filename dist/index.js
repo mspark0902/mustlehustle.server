@@ -60,5 +60,10 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         process.exit(1); // Exit the process if DB connection fails
     }
 });
-startServer();
+// Start the server only if this module is not being required by another module
+if (require.main === module) {
+    startServer();
+}
+// Export the app for Vercel to handle
+exports.default = app;
 //# sourceMappingURL=index.js.map

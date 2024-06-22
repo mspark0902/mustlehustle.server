@@ -56,4 +56,10 @@ const startServer = async () => {
   }
 };
 
-startServer();
+// Start the server only if this module is not being required by another module
+if (require.main === module) {
+  startServer();
+}
+
+// Export the app for Vercel to handle
+export default app;
