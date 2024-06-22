@@ -2,19 +2,12 @@
   "name": "mustlehustle.server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "build": "tsc",
     "dev": "nodemon --exec npx ts-node index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://bitbucket.org/msspark/mustlehustle.server/issues"
-  },
-  "homepage": "https://bitbucket.org/msspark/mustlehustle.server#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
