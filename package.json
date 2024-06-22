@@ -8,10 +8,6 @@
     "build": "tsc",
     "dev": "nodemon --exec npx ts-node api/index.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://msspark-admin@bitbucket.org/msspark/mustlehustle.server.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
