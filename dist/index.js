@@ -26,24 +26,31 @@ const DB_PASS = process.env.DB_PASS || '';
 const DB_HOST = process.env.DB_HOST || '';
 const DB_NAME = process.env.DB_NAME || '';
 const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
-var db;
+let db;
 mongodb_1.MongoClient.connect(mongoURI)
     .then((client) => {
     console.log('MongoDB connected');
     db = client.db(DB_NAME);
+    // Start the server after DB connection is established
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
 })
-    .catch((err) => console.error('MongoDB connection error:', err));
+    .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit the process if DB connection fails
+});
 app.get('/', (req, res) => {
     res.send('Muscle Hustle server running');
 });
 app.get('/test', (req, res) => {
     res.send('Muscle Hustle test running');
 });
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
 app.get('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        if (!db) {
+            throw new Error('Database not initialized');
+        }
         const users = yield db.collection('users').find({}).toArray();
         res.send(users);
     }
