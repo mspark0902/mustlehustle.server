@@ -20,38 +20,40 @@ const mongoURI: string = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NA
 
 let db: Db;
 
-MongoClient.connect(mongoURI)
-  .then((client) => {
+const startServer = async () => {
+  try {
+    const client = await MongoClient.connect(mongoURI);
     console.log('MongoDB connected');
     db = client.db(DB_NAME);
 
-    // Start the server after DB connection is established
+    app.get('/', (req: Request, res: Response) => {
+      res.send('Muscle Hustle server running');
+    });
+
+    app.get('/test', (req: Request, res: Response) => {
+      res.send('Muscle Hustle test running');
+    });
+
+    app.get('/users', async (req: Request, res: Response) => {
+      try {
+        if (!db) {
+          throw new Error('Database not initialized');
+        }
+        const users = await db.collection('users').find({}).toArray();
+        res.send(users);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error('MongoDB connection error:', err);
     process.exit(1); // Exit the process if DB connection fails
-  });
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Muscle Hustle server running');
-});
-
-app.get('/test', (req: Request, res: Response) => {
-  res.send('Muscle Hustle test running');
-});
-
-app.get('/users', async (req: Request, res: Response) => {
-  try {
-    if (!db) {
-      throw new Error('Database not initialized');
-    }
-    const users = await db.collection('users').find({}).toArray();
-    res.send(users);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).send('Internal Server Error');
   }
-});
+};
+
+startServer();
