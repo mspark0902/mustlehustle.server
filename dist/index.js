@@ -21,12 +21,12 @@ const app = (0, express_1.default)();
 const PORT = parseInt(process.env.PORT || '3000');
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-const DB_USER = process.env.DB_USER || '';
-const DB_PASS = process.env.DB_PASS || '';
-const DB_HOST = process.env.DB_HOST || '';
-const DB_NAME = process.env.DB_NAME || '';
+const DB_USER = 'msadmin';
+const DB_PASS = 'lVBPaRxqrIWHsRwM';
+const DB_HOST = 'cluster0.hbq9zux.mongodb.net';
+const DB_NAME = 'MSPARK';
 const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
-let db;
+var db;
 mongodb_1.MongoClient.connect(mongoURI)
     .then((client) => {
     console.log('MongoDB connected');

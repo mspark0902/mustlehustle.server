@@ -11,10 +11,10 @@ const PORT: number = parseInt(process.env.PORT || '3000')
 app.use(cors())
 app.use(express.json())
 
-const DB_USER: string = process.env.DB_USER || ''
-const DB_PASS: string = process.env.DB_PASS || ''
-const DB_HOST: string = process.env.DB_HOST || ''
-const DB_NAME: string = process.env.DB_NAME || ''
+const DB_USER: string =  'msadmin';
+const DB_PASS: string = 'lVBPaRxqrIWHsRwM';
+const DB_HOST: string =  'cluster0.hbq9zux.mongodb.net';
+const DB_NAME: string =  'MSPARK'
 
 const mongoURI: string = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
 
