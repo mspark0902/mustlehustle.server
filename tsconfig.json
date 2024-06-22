@@ -2,16 +2,13 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
-    "outDir": "./",
-    "rootDir": "api",
+    "outDir": ".",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "api/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
   ]

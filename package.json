@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.ts",
+    "start": "node index.js",
     "build": "tsc",
-    "dev": "nodemon --exec npx ts-node api/index.ts"
+    "dev": "nodemon --exec npx ts-node index.ts"
   },
   "keywords": [],
   "author": "",
