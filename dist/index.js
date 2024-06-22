@@ -21,10 +21,10 @@ const app = (0, express_1.default)();
 const PORT = parseInt(process.env.PORT || '3000');
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-const DB_USER = 'msadmin';
-const DB_PASS = 'lVBPaRxqrIWHsRwM';
-const DB_HOST = 'cluster0.hbq9zux.mongodb.net';
-const DB_NAME = 'MSPARK';
+const DB_USER = process.env.DB_USER || '';
+const DB_PASS = process.env.DB_PASS || '';
+const DB_HOST = process.env.DB_HOST || '';
+const DB_NAME = process.env.DB_NAME || '';
 const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
 var db;
 mongodb_1.MongoClient.connect(mongoURI)
@@ -35,6 +35,9 @@ mongodb_1.MongoClient.connect(mongoURI)
     .catch((err) => console.error('MongoDB connection error:', err));
 app.get('/', (req, res) => {
     res.send('Muscle Hustle server running');
+});
+app.get('/test', (req, res) => {
+    res.send('Muscle Hustle test running');
 });
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
