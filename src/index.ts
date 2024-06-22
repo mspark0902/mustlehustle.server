@@ -18,7 +18,7 @@ const DB_NAME: string = process.env.DB_NAME || ''
 
 const mongoURI: string = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
 
-let db: Db
+var db: Db
 
 MongoClient.connect(mongoURI)
   .then((client) => {
