@@ -1,23 +1,23 @@
-# Logs
-logs
-*.log
-npm-debug.log*
+# # Logs
+# logs
+# *.log
+# npm-debug.log*
 
-# Dependency directories
-node_modules/
+# # Dependency directories
+# node_modules/
 
-# Optional npm cache directory
-.npm
+# # Optional npm cache directory
+# .npm
 
-# Optional eslint cache
-.eslintcache
+# # Optional eslint cache
+# .eslintcache
 
-# Optional stylelint cache
-.stylelintcache
+# # Optional stylelint cache
+# .stylelintcache
 
-# Optional REPL history
-.node_repl_history
+# # Optional REPL history
+# .node_repl_history
 
-# dotenv environment variable files
-.env
-.env.test
+# # dotenv environment variable files
+# .env
+# .env.test
