@@ -8,31 +8,27 @@ dotenv.config()
 const app = express()
 const PORT: number = parseInt(process.env.PORT || '3000')
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-const DB_USER: string = process.env.DB_USER || ''
-const DB_PASS: string = process.env.DB_PASS || ''
-const DB_HOST: string = process.env.DB_HOST || ''
-const DB_NAME: string = process.env.DB_NAME || ''
+const DB_NAME: string = process.env.DB_NAME || '';
+const mongoURI: string = process.env.MONGODB_URI || '';
 
-const mongoURI: string = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
-
-var db: Db
+var db: Db;
 
 MongoClient.connect(mongoURI)
   .then((client) => {
-    console.log('MongoDB connected')
-    db = client.db(DB_NAME)
+    console.log('MongoDB connected');
+    db = client.db(DB_NAME);
   })
   .catch((err) => console.error('MongoDB connection error:', err))
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Muscle Hustle server running')
+  res.send('Muscle Hustle server running');
 })
 
 app.get('/test', (req: Request, res: Response) => {
-  res.send('Muscle Hustle test running')
+  res.send('Muscle Hustle test running');
 })
 
 
