@@ -23,21 +23,27 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 const DB_NAME = process.env.DB_NAME || '';
 const mongoURI = process.env.MONGODB_URI || '';
-var db;
-mongodb_1.MongoClient.connect(mongoURI)
-    .then((client) => {
-    console.log('MongoDB connected');
-    db = client.db(DB_NAME);
-})
-    .catch((err) => console.error('MongoDB connection error:', err));
+let db;
+function connectToDatabase() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const client = yield mongodb_1.MongoClient.connect(mongoURI, {
+                serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+            });
+            console.log('MongoDB connected');
+            db = client.db(DB_NAME);
+        }
+        catch (err) {
+            console.error('MongoDB connection error:', err);
+            process.exit(1); // Exit the process with an error code
+        }
+    });
+}
 app.get('/', (req, res) => {
     res.send('Muscle Hustle server running');
 });
 app.get('/test', (req, res) => {
     res.send('Muscle Hustle test running');
-});
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
 app.get('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -46,7 +52,16 @@ app.get('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error('Error fetching users:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json(error);
     }
 }));
+function startServer() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield connectToDatabase();
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    });
+}
+startServer();
 //# sourceMappingURL=index.js.map
