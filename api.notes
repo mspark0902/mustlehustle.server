@@ -1,0 +1,249 @@
+Api to develop
+
+1. Get UserInfo 
+     input - userid
+     get username,userid,height,currentweight
+
+2. get user weights
+    input userid, daterange
+
+3. set user weight
+    input userid
+
+4. get body fat 
+    input userid, daterange
+     
+
+routines
+
+1. get routines 
+    input userid
+    returns routines json
+    [
+  {
+    "name": "Pull day",
+    "id":"1",
+    "userid": 1,
+    "exercises": [
+      {
+        "name": "Biceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "name": "triceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  }
+]
+
+
+
+2. add routine
+[
+  {
+    "name": "Pull day",
+    "id":"1",
+    "userid": 1,
+    "exercises": [
+      {
+        "name": "Biceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "name": "triceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  }
+]
+
+3. edit routine
+    input routine id, userid and routine object updates the particular routine.
+
+4. delete routine
+    input rouitine id , userid
+
+5.Assign routine to new user
+    input routineid,currentUserid,newuserId
+
+exercise 
+
+1. get all exercise
+ input - none
+
+2. Add exercise 
+ input 
+  "name": "3/4 Sit-Up",
+  "force": "pull",
+  "level": "beginner",
+  "mechanic": "compound",
+  "equipment": "body only",
+  "primaryMuscles": [
+    "abdominals"
+  ],
+  "secondaryMuscles": [],
+  "instructions": [
+    "Lie down on the floor and secure your feet. Your legs should be bent at the knees.",
+    "Place your hands behind or to the side of your head. You will begin with your back on the ground. This will be your starting position.",
+    "Flex your hips and spine to raise your torso toward your knees.",
+    "At the top of the contraction your torso should be perpendicular to the ground. Reverse the motion, going only ¾ of the way down.",
+    "Repeat for the recommended amount of repetitions."
+  ],
+  "category": "strength",
+  "images": [
+    "3_4_Sit-Up/0.jpg",
+    "3_4_Sit-Up/1.jpg"
+  ],
+  "id": "3_4_Sit-Up"
+
+  logs
+  
+  1.create logs
+    [
+  {
+    "date": "2024-06-20",
+    "userid":1,
+    "routine": "Back biceps",
+    "totalweights": 152,
+    "totalreps": 12,
+    "totalworkout": 3,
+    "exercises": [
+      {
+        "name": "Bicep Curl",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 22.5, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      },
+      {
+        "name": "Lat pulldowns",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 22.5, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      }
+    ]
+  }
+]
+
+Get logs
+
+/api/workout-progress/:userid/:workout/:period
+
+[
+  {
+    "date": "2024-06-19T00:00:00.000Z",
+    "userid": 1,
+    "routine": "Back biceps",
+    "totalweights": 70,
+    "totalreps": 24,
+    "totalworkout": 1,
+    "exercises": [
+      {
+        "name": "Bicep Curl",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 25, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2024-06-20T00:00:00.000Z",
+    "userid": 1,
+    "routine": "Back biceps",
+    "totalweights": 67.5,
+    "totalreps": 24,
+    "totalworkout": 1,
+    "exercises": [
+      {
+        "name": "Bicep Curl",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 22.5, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      }
+    ]
+  }
+]
+
+
+Specific Routine
+
+/api/routine-progress/:userid/:routine/:period
+
+[
+  {
+    "date": "2024-06-19T00:00:00.000Z",
+    "userid": 1,
+    "routine": "Back biceps",
+    "totalweights": 140,
+    "totalreps": 48,
+    "totalworkout": 2,
+    "exercises": [
+      {
+        "name": "Bicep Curl",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 25, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      },
+      {
+        "name": "Lat pulldowns",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 25, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2024-06-20T00:00:00.000Z",
+    "userid": 1,
+    "routine": "Back biceps",
+    "totalweights": 135,
+    "totalreps": 48,
+    "totalworkout": 2,
+    "exercises": [
+      {
+        "name": "Bicep Curl",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 22.5, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      },
+      {
+        "name": "Lat pulldowns",
+        "sets": [
+          { "weight": 20, "reps": 10 },
+          { "weight": 22.5, "reps": 8 },
+          { "weight": 25, "reps": 6 }
+        ]
+      }
+    ]
+  }
+]
+
+Total Weight Lifted Each Day
+GET /api/total-weight/1/7days
+{
+  "2024-06-18": 140,
+  "2024-06-19": 140,
+  "2024-06-20": 135
+}

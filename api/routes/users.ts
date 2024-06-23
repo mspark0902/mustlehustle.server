@@ -1,17 +1,11 @@
 import { Router } from 'express';
-import { connectDB } from '../../lib/db';
+import { getUserInfo } from '../controllers/userController';
+import { getUserWeights, logWeight } from '../controllers/weightController';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-  try {
-    const db = await connectDB();
-    const collection = db.collection('users');
-    const data = await collection.find({}).toArray();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
+router.get('/', getUserInfo);
+router.post('/logweight', logWeight);
+router.get('/weights/:userid', getUserWeights);
 
 export default router;
