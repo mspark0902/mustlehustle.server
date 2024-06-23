@@ -13,7 +13,6 @@ export const logWeight = async (req: Request, res: Response) => {
       weight,
       date: new Date(),
     });
-    console.log(result);
     res
       .status(201)
       .json({ message: 'Weight logged successfully', data: result });
@@ -24,16 +23,15 @@ export const logWeight = async (req: Request, res: Response) => {
 };
 
 export const getUserWeights = async (req: Request, res: Response) => {
-  const { userid } = req.params; // Extract userid from URL params
-  const { period, month } = req.query; // Extract period and month from query string
+  const { userid } = req.params;
+  const { period, month } = req.query;
 
   try {
     const db = await connectDB();
-    let filter: any = { userid: parseInt(userid, 10) }; // Convert userid to integer
+    let filter: any = { userid: parseInt(userid, 10) };
 
-    // Check if period parameter is provided
     if (period === '7days') {
-      filter.date = { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }; // Date 7 days ago or later
+      filter.date = { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) };
     } else if (period === 'month') {
       const today = new Date();
       filter.date = {
@@ -41,8 +39,8 @@ export const getUserWeights = async (req: Request, res: Response) => {
           today.getFullYear(),
           today.getMonth() - 1,
           today.getDate() + 1,
-        ), // Start of last month
-        $lte: today, // End of today
+        ),
+        $lte: today,
       };
     } else if (period === '6month') {
       const today = new Date();
@@ -51,8 +49,8 @@ export const getUserWeights = async (req: Request, res: Response) => {
           today.getFullYear(),
           today.getMonth() - 6,
           today.getDate() + 1,
-        ), // Start of 6 months ago
-        $lte: today, // End of today
+        ),
+        $lte: today,
       };
     } else if (period === 'year') {
       const today = new Date();
@@ -61,16 +59,15 @@ export const getUserWeights = async (req: Request, res: Response) => {
           today.getFullYear() - 1,
           today.getMonth(),
           today.getDate() + 1,
-        ), // Start of last year
-        $lte: today, // End of today
+        ),
+        $lte: today,
       };
     } else if (period === 'specific' && month) {
-      // Parse month value and construct date range for the specified month
       const [year, monthValue] = (month as string).split('-').map(Number);
-      const startDate = new Date(year, monthValue - 1, 1); // Start of the month
-      const endDate = new Date(year, monthValue, 0); // End of the month (last day)
+      const startDate = new Date(year, monthValue - 1, 1);
+      const endDate = new Date(year, monthValue, 0);
 
-      filter.date = { $gte: startDate, $lte: endDate }; // Filter by date range for the specified month
+      filter.date = { $gte: startDate, $lte: endDate };
     }
 
     const weights = await db

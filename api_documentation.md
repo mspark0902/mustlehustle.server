@@ -1,11 +1,11 @@
-
 # API to Develop
 
 ## User Info
 
 ### 1. Get User Info
+
 - **Input**: `userid`
-- **Output**: 
+- **Output**:
   ```json
   {
     "username": "string",
@@ -16,20 +16,19 @@
   ```
 
 ### 2. Get User Weights
+
 - **Input**: `userid`, `daterange`
 - **Output**: List of weights within the specified date range.
 
 ### 3. Set User Weight
+
 - **Input**: `userid`, `weight`
 - **Output**: Confirmation of weight update.
-
-### 4. Get Body Fat
-- **Input**: `userid`, `daterange`
-- **Output**: List of body fat percentages within the specified date range.
 
 ## Routines
 
 ### 1. Get Routines
+
 - **Input**: `userid`
 - **Output**:
   ```json
@@ -57,52 +56,58 @@
   ```
 
 ### 2. Add Routine
-- **Input**: 
+
+- **Input**:
+
   ```json
-  [
-    {
-      "name": "Pull day",
-      "id": "1",
-      "userid": 1,
-      "exercises": [
-        {
-          "name": "Biceps curls",
-          "exerciseId": "",
-          "sets": 3,
-          "reps": 12
-        },
-        {
-          "name": "Triceps curls",
-          "exerciseId": "",
-          "sets": 3,
-          "reps": 12
-        }
-      ]
-    }
-  ]
+  {
+    "name": "Pull day",
+    "id": "1",
+    "userid": 1,
+    "exercises": [
+      {
+        "name": "Biceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "name": "Triceps curls",
+        "exerciseId": "",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  }
   ```
+
 - **Output**: Confirmation of routine addition.
 
 ### 3. Edit Routine
+
 - **Input**: `routineid`, `userid`, `routine object`
 - **Output**: Confirmation of routine update.
 
 ### 4. Delete Routine
+
 - **Input**: `routineid`, `userid`
 - **Output**: Confirmation of routine deletion.
 
 ### 5. Assign Routine to New User
+
 - **Input**: `routineid`, `currentUserid`, `newUserId`
 - **Output**: Confirmation of routine assignment.
 
 ## Exercises
 
 ### 1. Get All Exercises
+
 - **Input**: None
 - **Output**: List of all exercises.
 
 ### 2. Add Exercise
-- **Input**: 
+
+- **Input**:
   ```json
   {
     "name": "3/4 Sit-Up",
@@ -129,7 +134,8 @@
 ## Logs
 
 ### 1. Create Logs
-- **Input**: 
+
+- **Input**:
   ```json
   [
     {
@@ -163,8 +169,9 @@
 - **Output**: Confirmation of log creation.
 
 ### 2. Get Logs
+
 - **Endpoint**: `/api/workout-progress/:userid/:workout/:period`
-- **Output**: 
+- **Output**:
   ```json
   [
     {
@@ -207,6 +214,7 @@
   ```
 
 ### 3. Get Specific Routine Logs
+
 - **Endpoint**: `/api/routine-progress/:userid/:routine/:period`
 - **Output**:
   ```json
@@ -267,9 +275,11 @@
   ```
 
 ## Total Weight Lifted Each Day
+
 ### Endpoint
+
 - **GET**: `/api/total-weight/:userid/:period`
-- **Output**: 
+- **Output**:
   ```json
   {
     "2024-06-18": 140,
