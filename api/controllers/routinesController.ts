@@ -3,19 +3,45 @@ import { connectDB } from '../../lib/db';
 import { ObjectId } from 'mongodb';
 
 const collection = 'routines';
+const exercisesCollection = 'exercise';
 
 export const getRoutines = async (req: Request, res: Response) => {
   try {
-    const { userid } = req.params;
+    const { userid } = req.query;
     const db = await connectDB();
     const routines = await db
       .collection(collection)
-      .find({ userId: userid })
+      .aggregate([
+        { $match: { userId: Number(userid) } },
+        { $unwind: '$exercises' },
+        {
+          $lookup: {
+            from: exercisesCollection,
+            localField: 'exercises.exerciseId',
+            foreignField: 'id',
+            as: 'exerciseDetails',
+          },
+        },
+        { $unwind: '$exerciseDetails' },
+        {
+          $addFields: {
+            'exercises.images': '$exerciseDetails.images',
+          },
+        },
+        {
+          $group: {
+            _id: '$_id',
+            name: { $first: '$name' },
+            userId: { $first: '$userId' },
+            exercises: { $push: '$exercises' },
+          },
+        },
+      ])
       .toArray();
 
     res.json(routines);
   } catch (error) {
-    console.error('Error logging weight:', error);
+    console.error('Error retrieving routines:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
