@@ -55,7 +55,7 @@ export const editRoutine = async (req: Request, res: Response) => {
 
 export const deleteRoutine = async (req: Request, res: Response) => {
   try {
-    const { routineId, userId } = req.body;
+    const { routineId, userId } = req.query;
 
     const db = await connectDB();
     const result = await db

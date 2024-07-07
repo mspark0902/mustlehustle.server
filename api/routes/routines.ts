@@ -12,7 +12,7 @@ const router = Router();
 router.get('/', getRoutines);
 router.post('/add', addRoutines);
 router.post('/edit', editRoutine);
-router.delete('/delete', deleteRoutine);
+router.delete('/delete/:userId/:routineId', deleteRoutine);
 router.post('/assign', assignRoutine);
 
 export default router;
