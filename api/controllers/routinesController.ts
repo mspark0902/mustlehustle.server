@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { connectDB } from '../../lib/db';
-import { ObjectId } from 'mongodb';
 
 const collection = 'routines';
-const exercisesCollection = 'exercise';
 
 export const getRoutines = async (req: Request, res: Response) => {
   try {
@@ -11,34 +9,8 @@ export const getRoutines = async (req: Request, res: Response) => {
     const db = await connectDB();
     const routines = await db
       .collection(collection)
-      .aggregate([
-        { $match: { userId: Number(userid) } },
-        { $unwind: '$exercises' },
-        {
-          $lookup: {
-            from: exercisesCollection,
-            localField: 'exercises.exerciseId',
-            foreignField: 'id',
-            as: 'exerciseDetails',
-          },
-        },
-        { $unwind: '$exerciseDetails' },
-        {
-          $addFields: {
-            'exercises.images': '$exerciseDetails.images',
-          },
-        },
-        {
-          $group: {
-            _id: '$_id',
-            name: { $first: '$name' },
-            userId: { $first: '$userId' },
-            exercises: { $push: '$exercises' },
-          },
-        },
-      ])
+      .find({ userId: Number(userid) })
       .toArray();
-
     res.json(routines);
   } catch (error) {
     console.error('Error retrieving routines:', error);
@@ -64,12 +36,10 @@ export const editRoutine = async (req: Request, res: Response) => {
   try {
     const { routineId, userId, routine } = req.body;
 
-    const routineObjectId = new ObjectId(routineId as string);
-
     const db = await connectDB();
     const result = await db
       .collection(collection)
-      .updateOne({ _id: routineObjectId, userId: userId }, { $set: routine });
+      .updateOne({ id: routineId, userId: userId }, { $set: routine });
 
     if (result.matchedCount === 0) {
       return res.status(404).json({ message: 'Routine not found' });
@@ -87,12 +57,10 @@ export const deleteRoutine = async (req: Request, res: Response) => {
   try {
     const { routineId, userId } = req.body;
 
-    const routineObjectId = new ObjectId(routineId as string);
-
     const db = await connectDB();
     const result = await db
       .collection(collection)
-      .deleteOne({ _id: routineObjectId, userId: userId });
+      .deleteOne({ id: routineId, userId: userId });
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: 'Routine not found' });
@@ -113,11 +81,9 @@ export const assignRoutine = async (req: Request, res: Response) => {
 
     const db = await connectDB();
 
-    const routineObjectId = new ObjectId(routineId as string);
-
     const routine = await db
       .collection(collection)
-      .findOne({ _id: routineObjectId, userId: userId });
+      .findOne({ id: routineId, userId: userId });
 
     if (!routine) {
       return res.status(404).json({ message: 'Routine not found' });
