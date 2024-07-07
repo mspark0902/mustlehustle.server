@@ -56,10 +56,12 @@ export const editRoutine = async (req: Request, res: Response) => {
 export const deleteRoutine = async (req: Request, res: Response) => {
   try {
     const { routineId, userId } = req.params;
+    console.log(routineId);
+    console.log(userId);
     const db = await connectDB();
     const result = await db
       .collection(collection)
-      .deleteOne({ id: routineId, userId: userId });
+      .deleteOne({ id: routineId, userId: parseInt(userId) });
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: 'Routine not found' });
