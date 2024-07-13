@@ -10,6 +10,7 @@ export const getLogs = async (req: Request, res: Response) => {
     const logs = await db
       .collection(collection)
       .find({ userId: Number(userid) })
+      .sort({ date: -1 })
       .toArray();
     res.json(logs);
   } catch (error) {
