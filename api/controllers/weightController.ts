@@ -4,15 +4,16 @@ import { connectDB } from '../../lib/db';
 const weightCollection = 'weight';
 
 export const logWeight = async (req: Request, res: Response) => {
-  const { userid, weight } = req.body;
+  const { userid, weight, date } = req.body;
 
   try {
     const db = await connectDB();
     const result = await db.collection(weightCollection).insertOne({
       userid,
       weight,
-      date: new Date().toISOString(),
+      date,
     });
+
     res
       .status(201)
       .json({ message: 'Weight logged successfully', data: result });
