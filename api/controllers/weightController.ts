@@ -11,7 +11,7 @@ export const logWeight = async (req: Request, res: Response) => {
     const result = await db.collection(weightCollection).insertOne({
       userid,
       weight,
-      date: new Date(),
+      date: new Date().toISOString(),
     });
     res
       .status(201)
