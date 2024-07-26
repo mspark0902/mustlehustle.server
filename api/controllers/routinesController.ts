@@ -10,6 +10,7 @@ export const getRoutines = async (req: Request, res: Response) => {
     const routines = await db
       .collection(collection)
       .find({ userId: Number(userid) })
+      .sort({ day: 1 })
       .toArray();
     res.json(routines);
   } catch (error) {
